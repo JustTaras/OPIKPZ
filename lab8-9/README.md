@@ -24,5 +24,5 @@
 
 ```plantuml
 @startuml
-... ((image.png)
+... (image.png)
 @enduml
