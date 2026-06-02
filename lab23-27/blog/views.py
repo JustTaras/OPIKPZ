@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from .models import User, Media  # Імпортуємо обидва класи
+from django.http import Http404
+from .models import Media
 
 def home(request):
     # Створюємо об'єкт користувача (3 бали)
@@ -27,3 +28,16 @@ def home(request):
 
 def about(request):
     return render(request, 'blog/about.html')
+
+def media_detail(request, index):
+    try:
+        # Отримуємо об'єкт за його порядковим індексом (0, 1, 2...)
+        media = Media.objects.all()[index]
+    except IndexError:
+        # Якщо об'єкта під таким індексом немає в базі, повертаємо помилку 404
+        raise Http404("Медіа під цим індексом не знайдено")
+    
+    context = {
+        'media': media,
+    }
+    return render(request, 'blog/media_detail.html', context)
