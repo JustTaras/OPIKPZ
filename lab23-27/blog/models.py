@@ -1,17 +1,19 @@
 from django.db import models
-from dataclasses import dataclass
 
-# --- Завдання на 3 бали ---
-@dataclass
-class User:
-    first_name: str
-    last_name: str
-    description: str
+class Media(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    rating = models.IntegerField(default=0)
+    studio_name = models.CharField(max_length=100)
 
-# --- Завдання на 4-5 балів ---
-@dataclass
-class Media:
-    title: str
-    description: str
-    rating: int
-    studio_name: str
+    def __str__(self):
+        return self.title
+
+class Comment(models.Model):
+    # Зв'язок Один до Одного: одне медіа має один коментар
+    media = models.OneToOneField(Media, on_delete=models.CASCADE, related_name='comment')
+    text = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Коментар до {self.media.title}"

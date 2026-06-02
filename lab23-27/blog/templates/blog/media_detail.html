@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ media.title }}</title>
+</head>
+<body>
+    <h1>Назва: {{ media.title }}</h1>
+    <p><strong>Студія:</strong> {{ media.studio_name }}</p>
+    <p><strong>Рейтинг:</strong> {{ media.rating }}/10</p>
+    <p><strong>Опис:</strong> {{ media.description }}</p>
+
+    <hr>
+    
+    <h3>Коментар до медіа:</h3>
+    {% if media.comment %}
+        <div style="border-left: 3px solid #007bff; padding-left: 10px;">
+            <p>{{ media.comment.text }}</p>
+            <small>Дата публікації: {{ media.comment.created_at }}</small>
+        </div>
+    {% else %}
+        <p>Коментарів поки немає.</p>
+    {% endif %}
+
+    <hr>
+    <a href="{% url 'home' %}">На головну</a>
+</body>
+</html>
